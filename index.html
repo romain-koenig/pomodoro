@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kromodoro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="mode-pomodoro">
+  <header class="header">
+    <div class="logo">Kromodoro</div>
+  </header>
+
+  <main class="container">
+    <section class="timer-card">
+      <nav class="mode-tabs" role="tablist" aria-label="Timer modes">
+        <button class="tab active" data-mode="pomodoro" data-minutes="25" role="tab" aria-selected="true">
+          Kromodoro
+        </button>
+        <button class="tab" data-mode="short" data-minutes="5" role="tab" aria-selected="false">
+          Short Break
+        </button>
+        <button class="tab" data-mode="long" data-minutes="15" role="tab" aria-selected="false">
+          Long Break
+        </button>
+      </nav>
+
+      <div class="timer-display" aria-live="polite" aria-label="Time remaining">
+        <span id="minutes">25</span>:<span id="seconds">00</span>
+      </div>
+
+      <div class="controls">
+        <button class="btn-start" id="startBtn" aria-label="Start timer">START</button>
+        <button class="btn-reset" id="resetBtn" aria-label="Reset timer" title="Reset">&#8635;</button>
+      </div>
+    </section>
+
+    <section class="session-info" aria-label="Session information">
+      <span class="session-label">Session</span>
+      <span class="session-count" id="sessionCount">1</span>
+    </section>
+
+    <section class="tasks-section">
+      <h2 class="tasks-title">Tasks</h2>
+      <ul class="task-list" id="taskList" aria-label="Task list"></ul>
+      <form class="task-form" id="taskForm" aria-label="Add a task">
+        <input
+          type="text"
+          class="task-input"
+          id="taskInput"
+          placeholder="What are you working on?"
+          maxlength="120"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn-add-task">Add Task</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="notification-banner" id="notificationBanner" role="alert" aria-live="assertive" hidden>
+    <span id="notificationMessage"></span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
