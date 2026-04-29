@@ -79,8 +79,8 @@ function playBeep(frequency = 880, duration = 0.6, volume = BEEP_VOLUME) {
 
     osc.type = 'sine';
     osc.frequency.setValueAtTime(frequency, ctx.currentTime);
-    const actualVolume = (settings.volume / 100) * volume;
-    gain.gain.setValueAtTime(actualVolume, ctx.currentTime);
+    const scaledVolume = (settings.volume / 100) * volume;
+    gain.gain.setValueAtTime(scaledVolume, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
 
     osc.start(ctx.currentTime);
@@ -256,8 +256,11 @@ function saveTasks(tasks) {
 
 function sortTasks(tasks) {
   if (settings.checkToBottom) {
-    // Move completed tasks to bottom
-    return [...tasks.filter(t => !t.done), ...tasks.filter(t => t.done)];
+    // Move completed tasks to bottom - single pass
+    const incomplete = [];
+    const complete = [];
+    tasks.forEach(t => (t.done ? complete : incomplete).push(t));
+    return [...incomplete, ...complete];
   }
   return tasks;
 }
@@ -424,7 +427,7 @@ settingsModal.addEventListener('click', (e) => {
   }
 });
 
-// Volume slider real-time update
+// Volume slider real-time update (display only, doesn't apply settings yet)
 document.getElementById('volumeSlider').addEventListener('input', (e) => {
   document.getElementById('volumeValue').textContent = e.target.value;
 });
@@ -433,7 +436,7 @@ document.getElementById('volumeSlider').addEventListener('input', (e) => {
 const settingsInputs = [
   'pomodoroMinutes', 'shortBreakMinutes', 'longBreakMinutes',
   'autoStartBreaks', 'autoStartPomodoros', 'longBreakInterval',
-  'autoCheckTasks', 'checkToBottom', 'alarmSound', 'volumeSlider', 'alarmRepeat'
+  'autoCheckTasks', 'checkToBottom', 'alarmSound', 'alarmRepeat'
 ];
 
 settingsInputs.forEach(id => {
@@ -442,6 +445,9 @@ settingsInputs.forEach(id => {
     element.addEventListener('change', applySettings);
   }
 });
+
+// Volume slider applies settings on change (after user releases)
+document.getElementById('volumeSlider').addEventListener('change', applySettings);
 
 // ── Init ──────────────────────────────────────────────────────────────
 sessionEl.textContent = sessionCount;
