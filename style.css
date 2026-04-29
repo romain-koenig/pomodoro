@@ -1,0 +1,310 @@
+/* ── Reset & base ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-pomodoro: #ba4949;
+  --color-short:    #38858a;
+  --color-long:     #397097;
+  --color-bg:       #ba4949;
+  --color-card:     rgba(255,255,255,.15);
+  --color-text:     #fff;
+  --radius:         8px;
+  --transition:     .35s ease;
+}
+
+html {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Mode colours ─────────────────────────────────────────────────── */
+body.mode-pomodoro { --color-bg: var(--color-pomodoro); }
+body.mode-short    { --color-bg: var(--color-short); }
+body.mode-long     { --color-bg: var(--color-long); }
+
+/* ── Header ───────────────────────────────────────────────────────── */
+.header {
+  width: 100%;
+  max-width: 620px;
+  padding: 20px 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+/* ── Main container ───────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 620px;
+  padding: 24px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Timer card ───────────────────────────────────────────────────── */
+.timer-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 28px 20px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── Mode tabs ────────────────────────────────────────────────────── */
+.mode-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.75);
+  font-size: .9rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.tab:hover,
+.tab.active {
+  background: rgba(255,255,255,.25);
+  color: #fff;
+}
+
+/* ── Timer display ────────────────────────────────────────────────── */
+.timer-display {
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  user-select: none;
+}
+
+@media (max-width: 480px) {
+  .timer-display { font-size: 5.5rem; }
+}
+
+/* ── Controls ─────────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-start {
+  background: #fff;
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 16px 56px;
+  letter-spacing: 3px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 rgba(0,0,0,.2);
+  transition: transform .1s, box-shadow .1s, color var(--transition);
+}
+
+.btn-start:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0,0,0,.2);
+}
+
+.btn-reset {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.8);
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  line-height: 1;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn-reset:hover {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+}
+
+/* ── Session info ─────────────────────────────────────────────────── */
+.session-info {
+  text-align: center;
+  font-size: .9rem;
+  opacity: .85;
+  border-top: 1px solid rgba(255,255,255,.3);
+  padding-top: 14px;
+}
+
+.session-count {
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+/* ── Tasks section ────────────────────────────────────────────────── */
+.tasks-section {
+  background: rgba(0,0,0,.1);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tasks-title {
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: .85;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+  padding-bottom: 8px;
+}
+
+/* ── Task list ────────────────────────────────────────────────────── */
+.task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.15);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: .95rem;
+  animation: slideIn .2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+  opacity: .55;
+}
+
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #fff;
+  cursor: pointer;
+}
+
+.task-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.task-delete {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.6);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background .2s, color .2s;
+}
+
+.task-delete:hover {
+  background: rgba(255,255,255,.2);
+  color: #fff;
+}
+
+/* ── Task form ────────────────────────────────────────────────────── */
+.task-form {
+  display: flex;
+  gap: 8px;
+}
+
+.task-input {
+  flex: 1;
+  background: rgba(255,255,255,.2);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: .95rem;
+  padding: 10px 14px;
+  outline: none;
+  transition: background .2s;
+}
+
+.task-input::placeholder { color: rgba(255,255,255,.6); }
+
+.task-input:focus { background: rgba(255,255,255,.3); }
+
+.btn-add-task {
+  background: rgba(255,255,255,.25);
+  border: none;
+  border-radius: var(--radius);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s;
+}
+
+.btn-add-task:hover { background: rgba(255,255,255,.35); }
+
+/* ── Notification banner ──────────────────────────────────────────── */
+.notification-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 40px;
+  font-size: .95rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  backdrop-filter: blur(6px);
+  animation: fadeUp .3s ease;
+  z-index: 999;
+}
+
+.notification-banner[hidden] { display: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
