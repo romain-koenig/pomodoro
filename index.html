@@ -9,6 +9,7 @@
 <body class="mode-pomodoro">
   <header class="header">
     <div class="logo">Pomodoro</div>
+    <button class="btn-settings" id="settingsBtn" aria-label="Open settings" title="Settings">⚙️</button>
   </header>
 
   <main class="container">
@@ -59,6 +60,117 @@
 
   <div class="notification-banner" id="notificationBanner" role="alert" aria-live="assertive" hidden>
     <span id="notificationMessage"></span>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" hidden>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">SETTING</h2>
+        <button class="btn-close-modal" id="closeSettingsBtn" aria-label="Close settings">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Timer Section -->
+        <section class="settings-section">
+          <h3 class="section-title"><span class="section-icon">⏱️</span> TIMER</h3>
+          
+          <div class="setting-group">
+            <label class="setting-label">Time (minutes)</label>
+            <div class="time-inputs">
+              <div class="time-input-group">
+                <label for="pomodoroMinutes" class="time-sublabel">Pomodoro</label>
+                <input type="number" id="pomodoroMinutes" class="time-input" min="1" max="60" value="25" />
+              </div>
+              <div class="time-input-group">
+                <label for="shortBreakMinutes" class="time-sublabel">Short Break</label>
+                <input type="number" id="shortBreakMinutes" class="time-input" min="1" max="60" value="5" />
+              </div>
+              <div class="time-input-group">
+                <label for="longBreakMinutes" class="time-sublabel">Long Break</label>
+                <input type="number" id="longBreakMinutes" class="time-input" min="1" max="60" value="15" />
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <label class="setting-label">Auto Start Breaks</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoStartBreaks" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <label class="setting-label">Auto Start Pomodoros</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoStartPomodoros" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <label class="setting-label">Long Break interval</label>
+            <input type="number" id="longBreakInterval" class="interval-input" min="1" max="10" value="4" />
+          </div>
+        </section>
+
+        <!-- Task Section -->
+        <section class="settings-section">
+          <h3 class="section-title"><span class="section-icon">☑️</span> TASK</h3>
+
+          <div class="setting-row">
+            <label class="setting-label">
+              Auto Check Tasks
+              <span class="info-icon" title="Automatically check off tasks when timer completes">ℹ️</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoCheckTasks" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <label class="setting-label">
+              Check to Bottom
+              <span class="info-icon" title="Move checked tasks to the bottom of the list">ℹ️</span>
+            </label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="checkToBottom" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Sound Section -->
+        <section class="settings-section">
+          <h3 class="section-title"><span class="section-icon">🔊</span> SOUND</h3>
+
+          <div class="setting-row">
+            <label class="setting-label">Alarm Sound</label>
+            <select id="alarmSound" class="sound-select">
+              <option value="kitchen">Kitchen</option>
+              <option value="bell">Bell</option>
+              <option value="bird">Bird</option>
+              <option value="digital">Digital</option>
+            </select>
+          </div>
+
+          <div class="setting-group">
+            <label class="setting-label">Volume</label>
+            <div class="volume-control">
+              <span class="volume-value" id="volumeValue">50</span>
+              <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="50" />
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <label class="setting-label">repeat</label>
+            <input type="number" id="alarmRepeat" class="interval-input" min="1" max="10" value="1" />
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
