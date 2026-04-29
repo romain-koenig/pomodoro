@@ -7,7 +7,7 @@
 
 // ── Config ──────────────────────────────────────────────────────────
 const MODES = {
-  pomodoro: { label: 'Kromodoro',    minutes: 25, bodyClass: 'mode-pomodoro' },
+  pomodoro: { label: 'Pomodoro',    minutes: 25, bodyClass: 'mode-pomodoro' },
   short:    { label: 'Short Break', minutes: 5,  bodyClass: 'mode-short'    },
   long:     { label: 'Long Break',  minutes: 15, bodyClass: 'mode-long'     },
 };
@@ -151,7 +151,7 @@ function onTimerComplete() {
     sessionCount += 1;
     localStorage.setItem(SESSIONS_KEY, String(sessionCount));
     sessionEl.textContent = sessionCount;
-    showBanner('🍅 Kromodoro complete! Time for a break.');
+    showBanner('🍅 Pomodoro complete! Time for a break.');
   } else {
     showBanner('⏰ Break over! Ready for the next session?');
   }
